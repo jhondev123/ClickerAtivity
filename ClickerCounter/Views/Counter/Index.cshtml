@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Counter";
+}
+
+<h3>@ViewData["Title"]</h3>
+
+<p>Current count: <span id="count">0</span></p>
+<button id="incrementBtn" class="btn btn-primary">Increment</button>
+
+@section Scripts {
+    <script type="text/javascript">
+        const countSpan = document.getElementById('count');
+        const button = document.getElementById('incrementBtn');
+
+        button.addEventListener('click', async () => {
+            const nowValue = parseInt(countSpan.textContent);
+
+            try {
+                const response = await fetch(`@Url.Action("Click", "Counter")?nowValue=${nowValue}`, {
+                    method: 'GET'
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    countSpan.textContent = data.value;
+                } else {
+                    console.error('Error fetching new value:', response.statusText);
+                }
+            } catch (err) {
+                console.error('Request failed:', err);
+            }
+        });
+    </script>
+}
