@@ -9,5 +9,10 @@
             Value++;
             return Value;
         }
+        public int Reset()
+        {
+            Value = 0;
+            return Value;
+        }
     }
 }

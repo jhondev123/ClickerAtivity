@@ -15,5 +15,10 @@ namespace ClickerCounter.Controllers
             int newValue = _counter.Click(nowValue);
             return Json(new { value = newValue });
         }
+        public IActionResult Reset()
+        {
+            int newValue = _counter.Reset();
+            return Json(new { value = newValue });
+        }
     }
 }

@@ -7,10 +7,13 @@
 <p>Current count: <span id="count">0</span></p>
 <button id="incrementBtn" class="btn btn-primary">Increment</button>
 
+<button id="resetBtn" class="btn btn-primary">Reset</button>
+
 @section Scripts {
     <script type="text/javascript">
         const countSpan = document.getElementById('count');
         const button = document.getElementById('incrementBtn');
+        const resetButton = document.getElementById('resetBtn');
 
         button.addEventListener('click', async () => {
             const nowValue = parseInt(countSpan.textContent);
@@ -30,5 +33,21 @@
                 console.error('Request failed:', err);
             }
         });
+        resetButton.addEventListener('click', async () => {
+            try {
+                const response = await fetch(`@Url.Action("Reset", "Counter")`, {
+                    method: 'GET'
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    countSpan.textContent = data.value;
+                } else {
+                    console.error('Error resetting value:', response.statusText);
+                }
+            } catch (err) {
+                console.error('Request failed:', err);
+            }
+        });
+
     </script>
 }
